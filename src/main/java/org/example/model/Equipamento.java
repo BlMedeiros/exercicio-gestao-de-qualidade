@@ -26,6 +26,13 @@ public class Equipamento {
         this.statusOperacional = statusOperacional;
     }
 
+    public Equipamento(String nome, String numeroDeSerie, String areaSetor) {
+        this.nome = nome;
+        this.numeroDeSerie = numeroDeSerie;
+        this.areaSetor = areaSetor;
+        this.statusOperacional = null;
+    }
+
     public Long getId() {
         return id;
     }
