@@ -126,7 +126,7 @@ public class EquipamentoServiceIntegrationTest {
     void deveBuscarEquipamentoPorId() throws SQLException {
         // 1. ARRANGE: Preparar o cenário (Inserir o dado e pegar o ID)
         String insertQuery = """
-                INSERT INTO Equipamento
+                INSERT INTO equipamento
                 (nome, numeroDeSerie, areaSetor, statusOperacional)
                 VALUES
                 ('TESTE', 'CÓDIGOTESTE', 'SETORTESTE', 'OPERACIONAL')

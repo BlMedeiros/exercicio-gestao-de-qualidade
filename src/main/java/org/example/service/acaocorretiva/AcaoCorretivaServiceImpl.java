@@ -8,6 +8,9 @@ public class AcaoCorretivaServiceImpl implements AcaoCorretivaService{
 
     @Override
     public AcaoCorretiva registrarConclusaoDeAcao(AcaoCorretiva acao) throws SQLException {
-        return null;
+        if(acao == null) {
+            throw new RuntimeException("Falha não encontrada!");
+        }
+        return acao;
     }
 }
