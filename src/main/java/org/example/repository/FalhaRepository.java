@@ -1,6 +1,7 @@
 package org.example.repository;
 
 import org.example.database.Conexao;
+import org.example.model.AcaoCorretiva;
 import org.example.model.Falha;
 
 import java.math.BigDecimal;
@@ -44,9 +45,11 @@ public class FalhaRepository {
 
                 stmt.executeUpdate();
 
-                try (ResultSet rs = stmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        long idGerado = rs.getLong(1);
+                falha.setStatus("ABERTA");
+
+                try (ResultSet rsKey = stmt.getGeneratedKeys()) {
+                    if (rsKey.next()) {
+                        long idGerado = rsKey.getLong(1);
                         falha.setId(idGerado);
                     }
                 }
@@ -86,5 +89,61 @@ public class FalhaRepository {
             }
         }
         return falhaList;
+    }
+
+    public Falha buscarFalhaPorId(long id) throws SQLException {
+        String selectQuery = """
+                SELECT * FROM Falha
+                WHERE id = ?
+                """;
+
+        try(Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(selectQuery)) {
+            stmt.setLong(1,id);
+
+            ResultSet rs = stmt.executeQuery();
+
+           ///  CREATE TABLE IF NOT EXISTS Falha (
+           ///                 id BIGINT AUTO_INCREMENT PRIMARY KEY,
+           ///                 equipamentoId BIGINT NOT NULL,
+           ///                 dataHoraOcorrencia DATETIME NOT NULL,
+           ///                 descricao TEXT NOT NULL,
+           ///                 criticidade VARCHAR(50) NOT NULL,
+           ///                 status VARCHAR(50) NOT NULL,
+           ///                 tempoParadaHoras DECIMAL(10,2) DEFAULT 0.00,
+           ///
+
+
+
+            while (rs.next()) {
+                return new Falha(
+                        rs.getLong("id"),
+                        rs.getLong("equipamentoId"),
+                        rs.getTimestamp("dataHoraOcorrencia").toLocalDateTime(),
+                        rs.getString("descricao"),
+                        rs.getString("criticidade"),
+                        rs.getString("status"),
+                        rs.getBigDecimal("tempoParadaHoras")
+                );
+            }
+        }
+        return null;
+    }
+
+    public void atualizarFalha(long id, String status) throws SQLException {
+        String updateQuery = """
+                UPDATE Falha
+                SET status = ?
+                WHERE id = ?
+                """;
+
+        try(Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(updateQuery)) {
+
+            stmt.setString(1,status);
+            stmt.setLong(2,id);
+
+            stmt.executeUpdate();
+        }
     }
 }
