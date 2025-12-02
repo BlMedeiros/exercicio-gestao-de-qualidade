@@ -33,6 +33,10 @@ public class Equipamento {
         this.statusOperacional = null;
     }
 
+    public Equipamento() {
+
+    }
+
     public Long getId() {
         return id;
     }

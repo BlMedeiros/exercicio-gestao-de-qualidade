@@ -11,7 +11,23 @@ public class EquipamentoContagemFalhasDTO {
         this.totalFalhas = totalFalhas;
     }
 
+    public EquipamentoContagemFalhasDTO() {
+
+    }
+
     public Long getEquipamentoId() { return equipamentoId; }
     public String getNomeEquipamento() { return nomeEquipamento; }
     public int getTotalFalhas() { return totalFalhas; }
+
+    public void setEquipamentoId(Long equipamentoId) {
+        this.equipamentoId = equipamentoId;
+    }
+
+    public void setNomeEquipamento(String nomeEquipamento) {
+        this.nomeEquipamento = nomeEquipamento;
+    }
+
+    public void setTotalFalhas(int totalFalhas) {
+        this.totalFalhas = totalFalhas;
+    }
 }
